@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    //
     protected $fillable = [
         'titulo',
         'autor',
@@ -16,7 +15,7 @@ class Book extends Model
     ];
 
     /**
-     * 
+     * Devuelve todas las reservas relacionadas con el libro
      */
     public function reservas()
     {
@@ -24,7 +23,7 @@ class Book extends Model
     }
 
     /**
-     * 
+     * Calcula las copias disponibles en el momento
      */
     public function copiasDisponibles(): int
     {
@@ -35,6 +34,9 @@ class Book extends Model
         return $this->stock - $prestados;
     }
 
+    /**
+     * Devuelve true si hay al menos 1 copia disponible
+     */
     public function isDisponible(): bool
     {
         return $this->copiasDisponibles() > 0;

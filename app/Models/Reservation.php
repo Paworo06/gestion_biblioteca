@@ -17,7 +17,7 @@ class Reservation extends Model
     ];
 
     /**
-     * 
+     * Transforma los campos que vienen de la base de datos
      */
     protected $casts = [
         'fecha_inicio' => 'date',
@@ -26,7 +26,7 @@ class Reservation extends Model
     ];
 
     /**
-     * 
+     * Devuelve el usuario al que pertenece la reserva
      */
     public function usuario()
     {
@@ -34,7 +34,7 @@ class Reservation extends Model
     }
 
     /**
-     * 
+     * Devuelve el libro que se presta en la reserva
      */
     public function libro()
     {

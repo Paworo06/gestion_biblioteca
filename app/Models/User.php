@@ -48,7 +48,7 @@ class User extends Authenticatable
     }
 
     /**
-     * 
+     * Devuelve las reservas relacionadas con el usuario
      */
     public function reservas()
     {
@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
 
     /**
-     * 
+     * Devuelve true si el usuario tiene rol de profesor
      */
     public function isProfesor(): bool
     {
@@ -64,7 +64,7 @@ class User extends Authenticatable
     }
 
     /**
-     * 
+     * Devuelve true si el usuario tiene rol de alumno
      */
     public function isAlumno(): bool
     {
