@@ -29,7 +29,24 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => 'alumno',
         ];
+    }
+
+    /**
+     * Crea específicamente un profesor
+     */
+    public function profesor(): static
+    {
+        return $this->state(fn () => ['role' => 'profesor']);
+    }
+
+    /**
+     * Crea específicamente un usuario
+     */
+    public function alumno(): static
+    {
+        return $this->state(fn () => ['role' => 'alumno']);
     }
 
     /**
