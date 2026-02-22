@@ -1,26 +1,35 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('books.index');
+    }
+    return redirect()->route('login');
+});
+
 Route::middleware('auth')->group(function () {
-    // Rutas de Libros
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
 
-    //Rutas de Reservas - Alumno
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create/{book}', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-
-    //Rutas solo accesibles por profesores
-    Route::middleware(['role:profesor'])->group(function() {
-        Route::get('/reservations/gestionar', [ReservationController::class, 'gestionar'])->name('reservations.gestionar');
-        Route::get('/reservations/pendiente', [ReservationController::class, 'pendiente'])->name('reservations.pendiente');
-        Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
-        Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
-    });
 });
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'role:profesor'])->group(function () {
+    Route::get('/reservations/gestionar', [ReservationController::class, 'gestionar'])->name('reservations.gestionar');
+    Route::get('/reservations/pendiente', [ReservationController::class, 'pendiente'])->name('reservations.pendiente');
+    Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+    Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
+});
+
+require __DIR__ . '/auth.php';

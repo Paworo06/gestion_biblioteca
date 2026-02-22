@@ -26,13 +26,13 @@ class Reservation extends Model
     protected $casts = [
         'fecha_inicio' => 'date',
         'fecha_fin' => 'date',
-        'recodigo' => 'datetime',
+        'recogido' => 'datetime',
     ];
 
     /**
      * Devuelve el usuario al que pertenece la reserva
      */
-    public function usuario()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -40,7 +40,7 @@ class Reservation extends Model
     /**
      * Devuelve el libro que se presta en la reserva
      */
-    public function libro()
+    public function book()
     {
         return $this->belongsTo(Book::class);
     }
